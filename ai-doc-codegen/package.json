@@ -1,51 +1,38 @@
 {
-  "name": "ai-doc-codegen",
-  "displayName": "AICG",
-  "description": "AI-powered document mining and code generator for developers",
-  "version": "0.0.1",
+  "name": "ai-code-gen",
+  "displayName": "AI Code Generator",
+  "description": "A VS Code extension to generate AI-powered code snippets.",
+  "version": "1.0.1",
+  "publisher": "your-name",
   "engines": {
-    "vscode": "^1.98.0"
+    "vscode": "^1.75.0",
+    "node": ">=16.0.0"
   },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onCommand:ai-doc-codegen.helloWorld",
-    "onCommand:ai-doc-codegen.openDocumentMining"
-  ],
-  "main": "./extension.js",
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/Kishan1610/AI-Code-Gen.git"
+  },
+  "categories": ["Other"],
   "contributes": {
     "commands": [
       {
-        "command": "ai-doc-codegen.helloWorld",
-        "title": "Hello World"
-      },
-      {
-        "command": "ai-doc-codegen.openDocumentMining",
-        "title": "Open Document Mining"
+        "command": "extension.openWebView",
+        "title": "Open AI Code Generator"
       }
-    ],
-    "views": {
-      "explorer": [
-        {
-          "id": "documentMiningView",
-          "name": "Document Mining"
-        }
-      ]
-    }
+    ]
   },
+  "activationEvents": ["onCommand:extension.openWebView"],
+  "main": "extension.js",
   "scripts": {
-    "lint": "eslint .",
-    "compile": "tsc",
-    "pretest": "npm run lint",
-    "test": "vscode-test"
+    "prepublish": "vsce package",
+    "package": "vsce package",
+    "install": "npm install",
+    "start": "code --extensionDevelopmentPath=.",
+    "test": "echo 'No test specified'"
   },
   "devDependencies": {
-    "@types/vscode": "^1.98.0",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "20.x",
-    "eslint": "^9.21.0",
-    "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1"
-  }
+  "@vscode/vsce": "^2.15.0",
+  "vscode": "^1.1.36"
+}
+
 }
