@@ -1,0 +1,51 @@
+{
+  "name": "ai-doc-codegen",
+  "displayName": "AICG",
+  "description": "AI-powered document mining and code generator for developers",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.98.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:ai-doc-codegen.helloWorld",
+    "onCommand:ai-doc-codegen.openDocumentMining"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ai-doc-codegen.helloWorld",
+        "title": "Hello World"
+      },
+      {
+        "command": "ai-doc-codegen.openDocumentMining",
+        "title": "Open Document Mining"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "documentMiningView",
+          "name": "Document Mining"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "compile": "tsc",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.98.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "eslint": "^9.21.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1"
+  }
+}

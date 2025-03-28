@@ -1,0 +1,50 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: var(--vscode-editor-background);
+  color: var(--vscode-editor-foreground);
+}
+
+h1 {
+  color: var(--vscode-editor-foreground);
+}
+
+/* Style for all buttons */
+button {
+  padding: 10px 20px;
+  background-color: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+  border: none;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: var(--vscode-button-hoverBackground);
+}
+
+/* Main panel styling; initially hidden */
+#mainPanel {
+  display: none; /* Initially hidden until enabled */
+  margin-top: 20px;
+  border: 1px solid var(--vscode-editorWidget-border);
+  padding: 15px;
+  border-radius: 5px;
+}
+
+/* Prompt input styling */
+#promptInput {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* Output area styling */
+#output {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-editorWidget-border);
+  white-space: pre-wrap;
+}

@@ -1,0 +1,23 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "compile",
+			"path": "ai-doc-codegen",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: compile - ai-doc-codegen",
+			"detail": "tsc"
+		},
+		{
+			"type": "npm",
+			"script": "install",
+			"path": "ai-doc-codegen",
+			"group": "clean",
+			"problemMatcher": [],
+			"label": "npm: install - ai-doc-codegen",
+			"detail": "install dependencies from package"
+		}
+	]
+}
