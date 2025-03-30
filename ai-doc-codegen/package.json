@@ -1,5 +1,5 @@
 {
-  "name": "ai-code-gen",
+  "name": "ai-doc-codegen",
   "displayName": "AI Code Generator",
   "description": "A VS Code extension to generate AI-powered code snippets.",
   "version": "1.0.1",
@@ -9,8 +9,8 @@
     "node": ">=16.0.0"
   },
   "repository": {
-  "type": "git",
-  "url": "https://github.com/Kishan1610/AI-Code-Gen.git"
+    "type": "git",
+    "url": "https://github.com/Kishan1610/AI-Code-Gen.git"
   },
   "categories": ["Other"],
   "contributes": {
@@ -19,20 +19,23 @@
         "command": "extension.openWebView",
         "title": "Open AI Code Generator"
       }
+    ],
+    "keybindings": [
+      {
+        "command": "extension.openWebView",
+        "key": "ctrl+3",
+        "when": "editorFocus"
+      }
     ]
   },
   "activationEvents": ["onCommand:extension.openWebView"],
   "main": "extension.js",
   "scripts": {
-    "prepublish": "vsce package",
-    "package": "vsce package",
-    "install": "npm install",
     "start": "code --extensionDevelopmentPath=.",
     "test": "echo 'No test specified'"
   },
   "devDependencies": {
-  "@vscode/vsce": "^2.15.0",
-  "vscode": "^1.1.36"
-}
-
+    "@vscode/vsce": "^2.15.0",
+    "vscode": "^1.1.36"
+  }
 }

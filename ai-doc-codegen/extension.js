@@ -4,16 +4,19 @@ const vscode = require("vscode");
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-    console.log('Your extension "ai-code-gen" is now active!');
+    console.log('✅ AI Code Generator is now active!');
 
     let panel = null;
 
+    // Register the command
     const command = vscode.commands.registerCommand("extension.openWebView", () => {
+        console.log("🚀 AI Code Generator WebView Command Triggered!"); // Debugging log
+
         if (panel) {
             panel.reveal(vscode.ViewColumn.Beside);
             return;
         }
-        
+
         panel = vscode.window.createWebviewPanel(
             "customView",
             "AI Code Generator",
@@ -69,7 +72,7 @@ function getWebviewContent() {
 }
 
 function deactivate() {
-    console.log('Extension "ai-code-gen" is now deactivated.');
+    console.log('Extension "ai-doc-codegen" is now deactivated.');
 }
 
 module.exports = { activate, deactivate };
