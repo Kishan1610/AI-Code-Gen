@@ -1,0 +1,40 @@
+{
+  "name": "ai-code-generator",
+  "displayName": "AI Code Generator",
+  "description": "Generate code using AI inside VS Code with a slick UI and language tabs.",
+  "version": "1.0.0",
+  "publisher": "your-publisher-name",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Other",
+    "AI Tools"
+  ],
+  "activationEvents": [
+    "onCommand:extension.openWebView"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.openWebView",
+        "title": "Open AI Code Generator"
+      }
+    ]
+  },
+
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.70.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-jsdoc": "^46.8.0",
+    "typescript": "^5.3.3",
+    "vscode-test": "^1.7.0"
+  },
+  "dependencies": {}
+}

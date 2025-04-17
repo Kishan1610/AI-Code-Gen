@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Code Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <style>
+    body { background-color: #040812; color: white; font-family: sans-serif; }
+    .pop-in { animation: pop 0.3s ease-out; }
+    @keyframes pop { 0% { transform: scale(0.8); opacity: 0; } 60% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(1); } }
+    .spinner { border: 3px solid rgba(255,255,255,0.2); border-top: 3px solid rgba(255,255,255,0.8); border-radius: 50%; width: 1.2rem; height: 1.2rem; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .glass-effect { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    .neon-text { background: linear-gradient(90deg, #00d4ff, #00ffae); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; font-size: 1rem; }
+    .animated-hover:hover { transform: scale(1.1); transition: all 0.2s ease-in-out; box-shadow: 0 0 10px rgba(0, 255, 170, 0.6); }
+    .lang-tab.active { background: #00ffae; color: #000; font-weight: bold; }
+    .code-block { position: relative; }
+    .copy-btn { position: absolute; right: 10px; top: 10px; opacity: 0; transition: opacity 0.2s; }
+    .code-block:hover .copy-btn { opacity: 1; }
+  </style>
+</head>
+<body class="flex flex-col h-screen">
+  <header class="p-4 border-b border-gray-700">
+    <div class="flex items-center justify-between">
+      <h1 class="flex items-center gap-2">
+        <span class="text-xl">&lt;/&gt;</span>
+        <span class="neon-text text-lg">AI Code Generator</span>
+      </h1>
+      <div id="languageTabs" class="flex gap-2">
+        <button class="lang-tab px-3 py-1 rounded-lg text-sm bg-gray-700 hover:bg-cyan-600" data-lang="javascript">JavaScript</button>
+        <button class="lang-tab px-3 py-1 rounded-lg text-sm bg-gray-700 hover:bg-cyan-600" data-lang="python">Python</button>
+        <button class="lang-tab px-3 py-1 rounded-lg text-sm bg-gray-700 hover:bg-cyan-600" data-lang="html">HTML</button>
+        <button class="lang-tab px-3 py-1 rounded-lg text-sm bg-gray-700 hover:bg-cyan-600" data-lang="css">CSS</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="history" class="flex-1 overflow-y-auto px-4 pb-4 space-y-6">
+    <div class="text-gray-400 text-sm italic mt-4">💡 Hello! I'm your AI code assistant. Ask away!</div>
+  </main>
+
+  <footer class="p-4 border-t border-gray-700 glass-effect flex items-start gap-2">
+    <textarea id="promptInput" rows="1" placeholder="Enter your prompt..." class="flex-1 bg-gray-800 text-white p-3 rounded-2xl text-sm resize-none focus:outline-none focus:ring-2 focus:ring-cyan-400"></textarea>
+    <button id="sendBtn" class="p-3 bg-cyan-500 rounded-full hover:bg-cyan-400 shadow-lg animated-hover">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-9.193-5.132a1 1 0 00-1.5.866v10.264a1 1 0 001.5.866l9.193-5.132a1 1 0 000-1.732z" />
+      </svg>
+    </button>
+  </footer>
+
+  <script>
+    (function () {
+      const vscode = acquireVsCodeApi();
+      const input = document.getElementById("promptInput");
+      const sendBtn = document.getElementById("sendBtn");
+      const history = document.getElementById("history");
+      const langTabs = document.querySelectorAll(".lang-tab");
+      let activeLang = "javascript";
+
+      langTabs[0].classList.add("active");
+      langTabs.forEach(btn => {
+        btn.addEventListener("click", () => {
+          langTabs.forEach(tab => tab.classList.remove("active"));
+          btn.classList.add("active");
+          activeLang = btn.dataset.lang;
+        });
+      });
+
+      input.addEventListener("input", () => {
+        input.style.height = "auto";
+        input.style.height = input.scrollHeight + "px";
+      });
+
+      async function generateCode(prompt) {
+        const examples = {
+          javascript: `// ${prompt}\nfunction example() {\n  console.log("Hello, World!");\n}`,
+          python: `# ${prompt}\ndef example():\n    print("Hello, World!")`,
+          html: `<!-- ${prompt} -->\n<div>\n  Hello World\n</div>`,
+          css: `/* ${prompt} */\ndiv {\n  color: white;\n}`
+        };
+        return new Promise(res => setTimeout(() => res(examples[activeLang] || "// No output"), 800));
+      }
+
+      function createCard(prompt, code, time) {
+        const card = document.createElement("div");
+        card.className = "bg-gray-800/60 border border-gray-700 p-4 rounded-2xl space-y-3 pop-in";
+
+        card.innerHTML = `
+          <div class="text-xs text-gray-400">Prompt: "${prompt}"</div>
+          <pre class="code-block rounded-lg overflow-x-auto text-sm bg-gray-900 p-3 mt-2">
+            <code class="language-${activeLang}">${code}</code>
+            <button class="copy-btn p-1 bg-gray-700 rounded text-xs">📋 Copy</button>
+          </pre>
+          <div class="text-xs text-gray-500 mt-2">Generated in ${time}s • ${activeLang.toUpperCase()}</div>
+        `;
+
+        const copyBtn = card.querySelector(".copy-btn");
+        copyBtn.addEventListener("click", () => {
+          navigator.clipboard.writeText(code);
+          copyBtn.textContent = "Copied!";
+          setTimeout(() => (copyBtn.textContent = "📋 Copy"), 2000);
+        });
+
+        return card;
+      }
+
+      async function handleSubmit() {
+        const prompt = input.value.trim();
+        if (!prompt) return;
+
+        input.value = "";
+        input.style.height = "auto";
+        input.focus();
+
+        const loading = document.createElement("div");
+        loading.className = "bg-gray-800/40 border border-gray-700 p-4 rounded-xl text-sm text-gray-400 flex items-center gap-2";
+        loading.innerHTML = '<span class="spinner"></span> Generating code...';
+        history.appendChild(loading);
+        history.scrollTop = history.scrollHeight;
+
+        const start = performance.now();
+        try {
+          const output = await generateCode(prompt);
+          const time = ((performance.now() - start) / 1000).toFixed(2);
+          history.removeChild(loading);
+          const card = createCard(prompt, output, time);
+          history.appendChild(card);
+          hljs.highlightAll();
+          history.scrollTop = history.scrollHeight;
+        } catch (err) {
+          loading.textContent = "Error generating code.";
+          vscode.postMessage({ command: "alert", text: err.message });
+        }
+      }
+
+      sendBtn.addEventListener("click", handleSubmit);
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          handleSubmit();
+        }
+      });
+
+      input.focus();
+    })();
+  </script>
+</body>
+</html>
