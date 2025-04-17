@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # AI Code Generator - VS Code Extension
 
 AI Code Generator is a VS Code extension that helps developers generate AI-powered code snippets based on user input.
@@ -13,6 +12,3 @@ AI Code Generator is a VS Code extension that helps developers generate AI-power
 2. Install via VS Code:  
    ```sh
    code --install-extension ai-code-gen.vsix
-=======
-# AI-Code-Gen
->>>>>>> 28f506c314044199549856aafe5554c9c5f9613f

@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
 	"version": "0.2.0",
 	"configurations": [
 		{
@@ -11,3 +12,34 @@
 		}
 	]
 }
+=======
+    "version": "0.2.0",
+    "configurations": [
+      
+      {
+        "name": "Run Extension",
+        "type": "node",
+        "request": "launch",
+        "runtimeExecutable": "${execPath}",
+        "args": [
+          "--extensionDevelopmentPath=${workspaceFolder}"
+        ],
+        "outFiles": [
+          "${workspaceFolder}/dist/**/*.js"
+        ],
+        "preLaunchTask": "npm: compile"
+      },
+      {
+        "name": "Attach to Extension",
+        "type": "node",
+        "request": "attach",
+        "port": 9229,
+        "restart": true,
+        "outFiles": [
+          "${workspaceFolder}/dist/**/*.js"
+        ]
+      }
+    ]
+  }
+  
+>>>>>>> 28f506c314044199549856aafe5554c9c5f9613f
